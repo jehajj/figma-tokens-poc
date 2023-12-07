@@ -30,7 +30,7 @@ jobs:
     - name: Upload to Firestore
       run: |
         firebase use --add 833044824623
-        echo "$json_content" | firebase firestore:import --token "AIzaSyA9KIGXWhpkFqohA_MYPcThEO5eYaj1u9w" --only figma-tokens
+        echo "$json_content" | firebase firestore:import --token "$FIREBASE_TOKEN" --only <your-collection-name>
 
       env:
         FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
