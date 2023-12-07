@@ -24,18 +24,13 @@ jobs:
     - name: Read JSON file
       id: read-json
       run: |
-        # Replace <your-json-file-path> with the actual path to your JSON file
-        export JSON_CONTENT=$(cat <your-json-file-path>)
+        export JSON_CONTENT=$(cat ./tokens.json)
         echo "::set-output name=json_content::$JSON_CONTENT"
 
     - name: Upload to Firestore
       run: |
-        # Replace <your-service-account-key.json> with the path to your Firebase service account key JSON file
-        # Replace <your-firebase-project-id> with your Firebase project ID
-        # Replace <your-collection-name> with the name of the Firestore collection you want to use
-
-        firebase use --add <your-firebase-project-id>
-        echo "$json_content" | firebase firestore:import --token "$FIREBASE_TOKEN" --only <your-collection-name>
+        firebase use --add 833044824623
+        echo "$json_content" | firebase firestore:import --token "AIzaSyA9KIGXWhpkFqohA_MYPcThEO5eYaj1u9w" --only figma-tokens
 
       env:
         FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
