@@ -1,0 +1,41 @@
+name: Firebase Firestore Upload
+
+on:
+  push:
+    branches:
+      - main  # Adjust the branch name as needed
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: 14
+
+    - name: Install dependencies
+      run: npm install -g firebase-tools
+
+    - name: Read JSON file
+      id: read-json
+      run: |
+        # Replace <your-json-file-path> with the actual path to your JSON file
+        export JSON_CONTENT=$(cat <your-json-file-path>)
+        echo "::set-output name=json_content::$JSON_CONTENT"
+
+    - name: Upload to Firestore
+      run: |
+        # Replace <your-service-account-key.json> with the path to your Firebase service account key JSON file
+        # Replace <your-firebase-project-id> with your Firebase project ID
+        # Replace <your-collection-name> with the name of the Firestore collection you want to use
+
+        firebase use --add <your-firebase-project-id>
+        echo "$json_content" | firebase firestore:import --token "$FIREBASE_TOKEN" --only <your-collection-name>
+
+      env:
+        FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
