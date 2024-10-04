@@ -11,13 +11,13 @@ async function syncWithStrapi() {
 
     // Sync with Strapi via POST API
     const response = await axios({
-      method: "post",
-      url: `${STRAPI_API_URL}/figma-tokens`,
+      method: "put",
+      url: `${STRAPI_API_URL}/figma-tokens/1`,
       headers: {
         Authorization: `Bearer ${STRAPI_API_KEY}`,
         "Content-Type": "application/json",
       },
-      data: data,
+      data: { tokens: data },
     });
 
     console.log("Sync successful:", response.data);
