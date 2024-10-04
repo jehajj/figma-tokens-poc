@@ -1,0 +1,33 @@
+name: Sync Strapi on JSON Update
+
+on:
+  push:
+    paths:
+      - '**/tokens.json'  # Trigger action on tokens JSON file update
+
+jobs:
+  sync-strapi:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Check out the repository
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      # Step 2: Install Node.js (if using a JS script to sync)
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'  # Ensure compatibility with your project
+
+      # Step 3: Install dependencies
+      - name: Install Dependencies
+        run: npm install # or yarn install, depending on your package manager
+
+      # Step 4: Run a script that syncs with Strapi
+      - name: Sync with Strapi
+        env:
+          STRAPI_API_URL: ${{ secrets.STRAPI_API_URL }}  # Define your Strapi API URL as a secret
+          STRAPI_API_KEY: ${{ secrets.STRAPI_API_KEY }}  # Define your Strapi API Key as a secret
+        run: |
+          node syncStrapi.js  # Runs a custom Node.js script to sync JSON data with Strapi
