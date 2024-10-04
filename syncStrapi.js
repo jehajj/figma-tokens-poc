@@ -7,7 +7,7 @@ const STRAPI_API_KEY = process.env.STRAPI_API_KEY;
 async function syncWithStrapi() {
   try {
     // Load the JSON file (you can customize the file path)
-    const data = fs.readFileSync("./tokens.json", "utf8");
+    const data = JSON.parse(fs.readFileSync("./tokens.json", "utf8"));
 
     // Sync with Strapi via POST API
     const response = await axios({
